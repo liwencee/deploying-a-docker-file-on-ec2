@@ -1,0 +1,68 @@
+docker search ubuntu to be sure linux is install on your machine
+write command "docker pull ubutu" to fetch official ubuntu from docker hub images and store it locally on your computer.
+use docker image command to list images store on your local computer
+Create a folder by writing mkdir in your terminal of choice
+let say the directory is lekan-docker, then cd to the directory created and
+cd into in lekan-docker as your docker file from the terminal
+the run code .
+this will take you to VS code if you have VS code installed on your machine
+Create a docker file by running this command on your editor of your choice, i used VS code
+# Use the official NGINX base image
+FROM nginx:latest
+
+# Set the working directory in the container
+WORKDIR  /usr/share/nginx/html/  
+
+# Copy the local HTML file to the NGINX default public directory
+COPY index.html /usr/share/nginx/html/
+
+# Expose port 80 to allow external access
+EXPOSE 80
+
+# No need for CMD as NGINX image comes with a default CMD to start the server
+
+create a file in the lekan-docker dirctory from the VS code
+echo "Welcome to Darey.io" >> index.html this will be the output at the ec2 instance
+run this command to build an image from dockerfile "docker build -t dockerfile . "
+
+to run a container base on NGINX image with dockerfile run this command docker run "-p 8080:80 dockerfile "
+
+
+SET UP an EC2 INSTANCE
+*************************************************************************************
+Use SSH to connect to your EC2 instance, the SSH key pair you selected during instance set up wil be required
+
+UPDATE PACKAGES
+*************************************************************************************
+Use sudo apt update command to update software packages
+
+DOCKER UPDATE
+*************************************************************************************
+Docker requires some packages to be installed, you can install them using the ff commands
+
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+ADD DOCKER REPOSITORY GPG KEY
+**************************************************************************************
+To ensure authencity of docker packages, you should ad docker's GPG key to your system. Run this command
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+ADD THE DOCKER APT REPOSITORY
+*************************************************************************************
+You can add the official docker APT repository to your system with this command
+
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu 
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+INSTALL DOOCKER
+***************************************************************************************
+Sudo apt install docker
+
+CHECK THE VERSION OF THE DOCKER
+***************************************************************************************
+Docker version
+
+
+
+
